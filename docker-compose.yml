@@ -1,0 +1,30 @@
+version: '2'
+services:
+  postgresql:
+    image: postgres
+    volumes:
+      - alquitrandata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=alquitran_db
+      - POSTGRES_USER=alquitran_eduardo
+      - POSTGRES_PASSWORD
+
+  django:
+    build: .
+    restart: always
+    depends_on:
+      - postgresql
+    ports:
+      - 80:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=Arquitran.settings.production
+      - POSTGRES_NAME=alquitran_db
+      - POSTGRES_USER=alquitran_eduardo
+      - POSTGRES_PASSWORD
+      - SECRET_KEY
+
+volumes:
+  # docker volume create --name=alquitran-data
+  alquitrandata:
+    external:
+      name: alquitran-data
