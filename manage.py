@@ -3,7 +3,9 @@ import os
 import sys
 
 if __name__ == "__main__":
+    # This does not override current DJANGO_SETTINGS_MODULE
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Arquitran.settings")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
