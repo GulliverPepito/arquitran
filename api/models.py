@@ -1,8 +1,7 @@
-# import moneyed
 import uuid
-from djmoney.models.fields import MoneyField
-from django.db import models
+from django.db import models, transaction
 from django.core.validators import MaxValueValidator, MinValueValidator
+from djmoney.models.fields import MoneyField
 
 # Create your models here.
 
@@ -95,6 +94,14 @@ class ApplicationToken(models.Model):
         return self.application
 
 
+class TransactionManager(models.Manager):
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            self.kredit_card.balance -= self.amount
+            self.kredit_card.save()
+            super(TransactionManager, self).save(*args, **kwargs)
+
+
 class Transaction(models.Model):
     WAITING = 'WAIT'
     EXECUTED = 'EXEC'
@@ -113,24 +120,21 @@ class Transaction(models.Model):
 
     app = models.ForeignKey(
         ApplicationToken,
+        editable=False,
         blank=True,
         null=True,
     )
-    sender = models.ForeignKey(
+
+    kredit_card = models.ForeignKey(
         KreditCard,
-        related_name='sender',
-        blank=False,
-        null=False,
-    )
-    recipient = models.ForeignKey(
-        KreditCard,
-        related_name='recipient',
+        editable=False,
         blank=False,
         null=False,
     )
 
     amount = MoneyField(
         "Money to exchange",
+        editable=False,
         max_digits=10,
         decimal_places=2,
         default_currency="CLP",
@@ -162,5 +166,11 @@ class Transaction(models.Model):
         auto_now=True,
     )
 
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            self.kredit_card.balance -= self.amount
+            self.kredit_card.save()
+            super(Transaction, self).save(*args, **kwargs)
+
     def __str__(self):
-        return "{} -> {} ({})".format(self.sender, self.recipient, self.amount)
+        return "{} ({})".format(self.kredit_card, self.amount)

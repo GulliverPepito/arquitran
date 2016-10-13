@@ -27,14 +27,14 @@ class KreditCardAdmin(admin.ModelAdmin):
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('sender', 'recipient',
-                    'amount', 'status',
+    list_display = ('kredit_card', 'amount', 'status',
                     'created_at', 'updated_at',)
 
     # # Source: http://stackoverflow.com/a/24030057/3416691
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return self.readonly_fields + ('id',)
+            extra = ('id', 'app', 'kredit_card', 'amount',)
+            return extra + self.readonly_fields
         return self.readonly_fields
 
 

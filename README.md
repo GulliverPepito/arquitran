@@ -35,6 +35,7 @@ psql
 ```sql
 CREATE DATABASE arquitran;
 CREATE USER arquitranuser WITH PASSWORD 'password';
+ALTER USER arquitranuser CREATEDB;
 GRANT ALL PRIVILEGES ON DATABASE arquitran TO arquitranuser;
 ```
 
