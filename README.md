@@ -2,6 +2,8 @@
 
 > Built with Python 3.5 and Django :snake:
 
+[![Build Status](https://travis-ci.org/mrpatiwi/arquitran.svg?branch=travis)](https://travis-ci.org/mrpatiwi/arquitran)
+
 ## Development
 
 Clone this repository:
