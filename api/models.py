@@ -59,6 +59,9 @@ class KreditCard(models.Model):
         auto_now=True,
     )
 
+    def __str__(self):
+        return " ".join([self.first_name, self.last_name])
+
 
 class ApplicationToken(models.Model):
     application = models.CharField(
@@ -87,3 +90,77 @@ class ApplicationToken(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
+
+    def __str__(self):
+        return self.application
+
+
+class Transaction(models.Model):
+    WAITING = 'WAIT'
+    EXECUTED = 'EXEC'
+    ERRORED = 'ERR'
+
+    id = models.UUIDField(
+        "Transaction unique identifier",
+        primary_key=True,
+        editable=False,
+        max_length=255,
+        unique=True,
+        blank=False,
+        null=False,
+        default=uuid.uuid4,
+    )
+
+    app = models.ForeignKey(
+        ApplicationToken,
+        blank=True,
+        null=True,
+    )
+    sender = models.ForeignKey(
+        KreditCard,
+        related_name='sender',
+        blank=False,
+        null=False,
+    )
+    recipient = models.ForeignKey(
+        KreditCard,
+        related_name='recipient',
+        blank=False,
+        null=False,
+    )
+
+    amount = MoneyField(
+        "Money to exchange",
+        max_digits=10,
+        decimal_places=2,
+        default_currency="CLP",
+        default=0,
+    )
+
+    status = models.CharField(
+        "Current transaction status code.",
+        max_length=4,
+        choices=(
+            (WAITING, WAITING),
+            (EXECUTED, EXECUTED),
+            (ERRORED, ERRORED),
+        ),
+        default=WAITING,
+    )
+
+    status_description = models.TextField(
+        "Description related to the status.",
+        blank=True,
+        null=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return "{} -> {} ({})".format(self.sender, self.recipient, self.amount)

@@ -26,5 +26,18 @@ class KreditCardAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'recipient',
+                    'amount', 'status',
+                    'created_at', 'updated_at',)
+
+    # # Source: http://stackoverflow.com/a/24030057/3416691
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('id',)
+        return self.readonly_fields
+
+
+admin.site.register(models.Transaction, TransactionAdmin)
 admin.site.register(models.KreditCard, KreditCardAdmin)
 admin.site.register(models.ApplicationToken, ApplicationTokenAdmin)
