@@ -94,14 +94,6 @@ class ApplicationToken(models.Model):
         return self.application
 
 
-class TransactionManager(models.Manager):
-    def save(self, *args, **kwargs):
-        with transaction.atomic():
-            self.kredit_card.balance -= self.amount
-            self.kredit_card.save()
-            super(TransactionManager, self).save(*args, **kwargs)
-
-
 class Transaction(models.Model):
     WAITING = 'WAIT'
     EXECUTED = 'EXEC'
