@@ -2,14 +2,15 @@
 
 > Built with Python 3.5 and Django :snake:
 
-[![Build Status](https://travis-ci.org/mrpatiwi/arquitran.svg?branch=travis)](https://travis-ci.org/mrpatiwi/arquitran)
+[![Build Status](https://travis-ci.org/IIC2173-2016-2/arquitran.svg?branch=travis)](https://travis-ci.org/IIC2173-2016-2/arquitran)
 
 ## Development
 
 Clone this repository:
 
 ```sh
-git clone ...
+git clone https://github.com/IIC2173-2016-2/arquitran.git
+cd arquitran
 ```
 
 ### Prepare virtualenv:
