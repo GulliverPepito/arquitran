@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
+from .models import Transaction, KreditCard, ApplicationToken
 # from django.shortcuts import render
 # from django.views import View
 
@@ -29,9 +30,23 @@ def transaction_status(request, id):
         return BAD_REQUEST()
 
     application_token = request.GET.get('application_token', '')
-    if application_token == '':
+    if not application_token or application_token == '':
         return FORBIDDEN()
 
-    # if not found: 400 Bad request.
+    try:
+        ApplicationToken.objects.get(token=application_token)
+        transaction = Transaction.objects.get(id=id)
+        amount = transaction.amount
+    except:
+        return BAD_REQUEST()
 
-    return HttpResponse('Hello, World 111!' + id + application_token)
+    return JsonResponse({
+        "to_charge": {
+            "currency": str(amount.currency),
+            "amount": float(amount.amount),
+        },
+        "status": {
+            "transaction_status_code": transaction.status,
+            "description": transaction.status_description,
+        }
+    })
