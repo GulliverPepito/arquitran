@@ -32,9 +32,14 @@ pip install -r requirements.txt
 
 ### Setup Postgres database:
 
+Open the Postgres interactive command line:
+
 ```sh
 psql
 ```
+
+Create the user, database and grant him permissions:
+
 ```sql
 CREATE DATABASE arquitran;
 CREATE USER arquitranuser WITH PASSWORD 'password';
@@ -90,4 +95,12 @@ Update app with short downtime:
 
 ```sh
 docker-compose up -d --build
+```
+
+## Testing
+
+Run the test suite with:
+
+```sh
+python manage.py test
 ```
