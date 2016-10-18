@@ -1,5 +1,17 @@
 version: '2'
 services:
+  proxy:
+    image: abiosoft/caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - django
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile
+      - ./.caddy:/root/.caddy
+
   postgresql:
     image: postgres
     volumes:
@@ -14,8 +26,6 @@ services:
     restart: always
     depends_on:
       - postgresql
-    ports:
-      - 80:8000
     environment:
       - DJANGO_SETTINGS_MODULE=Arquitran.settings.production
       - POSTGRES_NAME=alquitran_db

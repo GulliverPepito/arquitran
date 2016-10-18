@@ -1,0 +1,8 @@
+alquitran.ing.puc.cl {
+  proxy / django:8000 {
+    proxy_header Host {host}
+    proxy_header X-Real-IP {remote}
+    proxy_header X-Forwarded-Proto {scheme}
+  }
+  tls lopezjuripatricio@gmail.com
+}

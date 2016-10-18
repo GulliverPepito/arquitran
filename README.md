@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.org/IIC2173-2016-2/arquitran.svg?branch=travis)](https://travis-ci.org/IIC2173-2016-2/arquitran)
 
+![screenshot](./media/screenshot.png)
+
+[API documentation](https://jsapi.apiary.io/previews/arquitranpaymentapi) | [Running instance](https://alquitran.ing.puc.cl)
+
 ## Development
 
 Clone this repository:
@@ -89,6 +93,12 @@ Run migrations:
 
 ```sh
 docker-compose exec django python manage.py migrate
+```
+
+Create super user:
+
+```sh
+docker-compose exec django python manage.py createsuperuser --username=admin --email=admin@example.com
 ```
 
 Update app with short downtime:
