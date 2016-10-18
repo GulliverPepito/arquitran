@@ -112,21 +112,21 @@ class Transaction(models.Model):
 
     app = models.ForeignKey(
         ApplicationToken,
-        editable=False,
+        editable=True,
         blank=True,
         null=True,
     )
 
     kredit_card = models.ForeignKey(
         KreditCard,
-        editable=False,
+        editable=True,
         blank=False,
         null=False,
     )
 
     amount = MoneyField(
         "Money to exchange",
-        editable=False,
+        editable=True,
         max_digits=10,
         decimal_places=2,
         default_currency="CLP",
