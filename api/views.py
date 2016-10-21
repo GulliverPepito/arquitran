@@ -1,6 +1,7 @@
 import json
 from moneyed import Money
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
 from .models import Transaction, KreditCard, ApplicationToken
 
 # Create your views here.
@@ -16,6 +17,10 @@ def FORBIDDEN(msg="Forbidden. Invalid application token."):
 
 def SERVER_ERROR(msg="Server error. Try again :)"):
     return HttpResponse(msg, status=501)
+
+
+def root(request):
+    return render(request, 'index.html')
 
 
 def create_transaction(request):
