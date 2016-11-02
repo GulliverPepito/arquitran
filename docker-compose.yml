@@ -27,7 +27,6 @@ services:
     depends_on:
       - postgresql
     environment:
-      - DEBUG=False
       - DJANGO_SETTINGS_MODULE=Arquitran.settings.production
       - POSTGRES_NAME=alquitran_db
       - POSTGRES_USER=alquitran_eduardo
