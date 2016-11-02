@@ -1,3 +1,6 @@
+# Caddy webserver
+.caddy/
+
 # Virtual env
 # Create yours with:
 # $ virtualenv --python=python3.5 arquitranenv

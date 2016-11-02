@@ -4,6 +4,8 @@ import os
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', False)
 
+print('Debug mode:', DEBUG)
+
 ALLOWED_HOSTS = ['*']
 
 DATABASES = {
