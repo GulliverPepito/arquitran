@@ -68,7 +68,9 @@ def create_transaction(request):
         "transaction_status_code": transaction.status,
         "description": transaction.status_description,
     }
-    return JsonResponse({"status": status}, status=201)
+    response = JsonResponse({"status": status}, status=201)
+    response["Location"] = "/transactions/{}/".format(transaction.id)
+    return response
 
 
 def transaction_status(request, id):
